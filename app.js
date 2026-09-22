@@ -162,7 +162,7 @@ class ShyLamput {
     const run = new AbortController();
     this.run = run;
     const { signal } = run;
-    const isFeint = !this.teased && Math.random() < .70;
+    const isFeint = !this.teased && Math.random() < .80;
     const tucked = { y: 65, x: 0, tilt: 0 };
     const peek = { y: isFeint ? 6 : 0, x: random(-3, 3), tilt: random(-3, 2) };
     const hidden = { x: 216, y: 140, extension: 0 };
