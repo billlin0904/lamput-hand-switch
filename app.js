@@ -10,8 +10,8 @@ let cohortDeadline = 0;
 // Nearby clicks share a waiting period, then a random subset acts together.
 function nextDeadline(joinGroup = false) {
   const now = performance.now();
-  if (joinGroup && cohortDeadline >= now + 5000) return cohortDeadline;
-  const deadline = now + random(5500, 13000);
+  if (joinGroup && cohortDeadline >= now + 2500) return cohortDeadline;
+  const deadline = now + random(2500, 6500);
   if (joinGroup) cohortDeadline = deadline;
   return deadline;
 }
@@ -162,7 +162,7 @@ class ShyLamput {
     const run = new AbortController();
     this.run = run;
     const { signal } = run;
-    const isFeint = !this.teased && Math.random() < .42;
+    const isFeint = !this.teased && Math.random() < .70;
     const tucked = { y: 65, x: 0, tilt: 0 };
     const peek = { y: isFeint ? 6 : 0, x: random(-3, 3), tilt: random(-3, 2) };
     const hidden = { x: 216, y: 140, extension: 0 };
