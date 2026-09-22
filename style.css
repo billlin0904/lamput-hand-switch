@@ -1,0 +1,40 @@
+:root { color-scheme: light; --paper: #fafbf7; --ink: #314b37; --off: #e5e5ea; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+main { min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px 20px 24px; overflow: hidden; }
+h1 { margin: 0 0 12px; font-size: clamp(22px, 4vw, 28px); font-weight: 600; letter-spacing: .04em; line-height: 1.4; }
+.switch-grid { display: grid; grid-template-columns: repeat(2, 288px); gap: 22px 20px; }
+.switch-card { min-width: 0; text-align: center; }
+.stage { position: relative; width: 360px; height: 265px; margin: 0 auto; zoom: .8; isolation: isolate; }
+.ground { position: absolute; left: 57px; top: 194px; width: 246px; height: 16px; border-radius: 50%; background: #345d2a0d; filter: blur(8px); }
+.toggle { position: absolute; z-index: 3; left: 55px; top: 101px; width: 250px; height: 120px; border: 0; border-radius: 70px; background: var(--off); cursor: pointer; padding: 0; transition: background 280ms; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+.toggle[aria-checked="true"] { background: var(--green); }
+.toggle:focus-visible { outline: 3px solid var(--green); outline-offset: 8px; }
+.knob { position: absolute; left: 7px; top: 7px; width: 106px; height: 106px; border-radius: 50%; background: white; box-shadow: 0 3px 7px #00000020, 0 1px 2px #00000014; transform: translateX(0); transition: transform 280ms cubic-bezier(.2,.8,.2,1); }
+.toggle[aria-checked="true"] .knob { transform: translateX(130px); }
+.stage[data-phase="pressing"] .knob { transition: transform 150ms cubic-bezier(.4,0,.6,1); }
+/* The head is always cropped at the upper edge, including its entire retreat. */
+.character-window { position: absolute; inset: 0; z-index: 1; clip-path: inset(0 0 164px 0); pointer-events: none; }
+.character { position: absolute; left: 178px; top: 46px; width: 96px; height: 96px; transform: translateY(65px); transform-origin: 50% 80%; visibility: hidden; user-select: none; }
+.stage.peeking .character { visibility: visible; }
+.snake-body { position: absolute; inset: 0; width: 360px; height: 265px; z-index: 1; overflow: visible; pointer-events: none; visibility: hidden; clip-path: inset(0 0 44px 0); }
+.stage.reaching .snake-body { visibility: visible; }
+.hand-window { position: absolute; inset: 0; z-index: 2; pointer-events: none; clip-path: inset(0 0 44px 0); }
+.hand { position: absolute; left: 0; top: 0; width: 180px; height: 120px; opacity: 0; transform-origin: 0 0; }
+.blob-hand { width: 180px; height: 120px; overflow: visible; }
+/* Only the fingertips cross the switch. Palm and wrist remain behind it. */
+.hand-front { z-index: 4; visibility: hidden; }
+.hand-front .hand { clip-path: inset(25% 64% 35% 0 round 8px); }
+.stage.touching .hand-front { visibility: visible; }
+.stage.pointer-near .character, .stage.pointer-near .snake-body, .stage.pointer-near .hand-window { visibility: hidden !important; }
+.status { display: flex; justify-content: space-between; position: absolute; top: 244px; left: 78px; right: 77px; color: #84907b; font-size: 13px; letter-spacing: .18em; }
+.status span { transition: color 200ms; }
+.status .active { color: #3e643c; font-weight: 600; }
+@media (max-width: 680px) {
+  main { padding: 22px 14px; }
+  .switch-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; max-width: 420px; gap: 26px 4px; }
+  .stage { zoom: .47; }
+  .status { font-size: 20px; }
+}
+@media (max-width: 350px) { .stage { zoom: .4; } }
+@media (prefers-reduced-motion: reduce) { .knob, .toggle, .status span { transition: none !important; } }
